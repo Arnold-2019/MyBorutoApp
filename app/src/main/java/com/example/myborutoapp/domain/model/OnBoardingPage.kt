@@ -4,9 +4,9 @@ import androidx.annotation.DrawableRes
 import com.example.myborutoapp.R
 
 sealed class OnBoardingPage(
-    @DrawableRes image: Int,
-    tile: String,
-    description: String
+    @DrawableRes val image: Int,
+    val tile: String,
+    val description: String
 ) {
     object First: OnBoardingPage(
         image = R.drawable.greetings,
