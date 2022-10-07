@@ -2,19 +2,24 @@
 
 package com.example.myborutoapp.presentation.screens.welcome
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -26,6 +31,7 @@ import com.example.myborutoapp.ui.theme.INDICATOR_SPACE
 import com.example.myborutoapp.ui.theme.INDICATOR_WIDTH
 import com.example.myborutoapp.ui.theme.SMALL_PADDING
 import com.example.myborutoapp.ui.theme.activeIndicatorColor
+import com.example.myborutoapp.ui.theme.buttonBackgroundColor
 import com.example.myborutoapp.ui.theme.descriptionColor
 import com.example.myborutoapp.ui.theme.inactiveIndicatorColor
 import com.example.myborutoapp.ui.theme.titleColor
@@ -34,6 +40,7 @@ import com.example.myborutoapp.util.Constants.ON_BOARDING_PAGE_COUNT
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.HorizontalPagerIndicator
+import com.google.accompanist.pager.PagerState
 import com.google.accompanist.pager.rememberPagerState
 
 @OptIn(ExperimentalPagerApi::class)
@@ -71,6 +78,13 @@ fun WelcomeScreen(navHostController: NavHostController) {
             indicatorWidth = INDICATOR_WIDTH,
             spacing = INDICATOR_SPACE
         )
+
+        FinishButton(
+            modifier = Modifier.weight(1f),
+            pagerState = pagerState
+        ) {
+
+        }
     }
 }
 
@@ -108,6 +122,37 @@ fun PagerScreen(onBoardingPage: OnBoardingPage) {
             fontWeight = FontWeight.Medium,
             textAlign = TextAlign.Center
         )
+    }
+}
+
+@OptIn(ExperimentalPagerApi::class)
+@Composable
+fun FinishButton(
+    modifier: Modifier,
+    pagerState: PagerState,
+    onClick: () -> Unit
+) {
+    Row(
+        modifier = modifier,
+        verticalAlignment = Alignment.Top,
+        horizontalArrangement = Arrangement.Center
+    ) {
+        AnimatedVisibility(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = EXTRA_LARGE_PADDING),
+            visible = pagerState.currentPage == 2
+        ) {
+            Button(
+                onClick = onClick,
+                colors = ButtonDefaults.buttonColors(
+                    backgroundColor = MaterialTheme.colors.buttonBackgroundColor,
+                    contentColor = Color.White
+                )
+            ) {
+                Text(text = "Finish")
+            }
+        }
     }
 }
 
