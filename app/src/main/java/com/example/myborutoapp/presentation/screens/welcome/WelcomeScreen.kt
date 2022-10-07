@@ -22,25 +22,28 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import com.example.myborutoapp.domain.model.OnBoardingPage
 import com.example.myborutoapp.ui.theme.EXTRA_LARGE_PADDING
+import com.example.myborutoapp.ui.theme.INDICATOR_SPACE
+import com.example.myborutoapp.ui.theme.INDICATOR_WIDTH
 import com.example.myborutoapp.ui.theme.SMALL_PADDING
+import com.example.myborutoapp.ui.theme.activeIndicatorColor
 import com.example.myborutoapp.ui.theme.descriptionColor
+import com.example.myborutoapp.ui.theme.inactiveIndicatorColor
 import com.example.myborutoapp.ui.theme.titleColor
 import com.example.myborutoapp.ui.theme.welcomeScreenBackgroundColor
 import com.example.myborutoapp.util.Constants.ON_BOARDING_PAGE_COUNT
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
+import com.google.accompanist.pager.HorizontalPagerIndicator
 import com.google.accompanist.pager.rememberPagerState
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 fun WelcomeScreen(navHostController: NavHostController) {
-
     val pages = listOf(
         OnBoardingPage.First,
         OnBoardingPage.Second,
         OnBoardingPage.Third
     )
-
     val pagerState = rememberPagerState()
 
     Column(
@@ -49,12 +52,25 @@ fun WelcomeScreen(navHostController: NavHostController) {
             .background(color = MaterialTheme.colors.welcomeScreenBackgroundColor)
     ) {
         HorizontalPager(
+            modifier = Modifier
+                .weight(10f),
             count = ON_BOARDING_PAGE_COUNT,
             state = pagerState,
             verticalAlignment = Alignment.Top
         ) { page ->
             PagerScreen(pages[page])
         }
+
+        HorizontalPagerIndicator(
+            modifier = Modifier
+                .weight(1f)
+                .align(Alignment.CenterHorizontally),
+            pagerState = pagerState,
+            activeColor = MaterialTheme.colors.activeIndicatorColor,
+            inactiveColor = MaterialTheme.colors.inactiveIndicatorColor,
+            indicatorWidth = INDICATOR_WIDTH,
+            spacing = INDICATOR_SPACE
+        )
     }
 }
 
