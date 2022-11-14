@@ -19,13 +19,18 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.myborutoapp.R
+import com.example.myborutoapp.navigation.Screen
 import com.example.myborutoapp.ui.theme.Purple500
 import com.example.myborutoapp.ui.theme.Purple700
 
 @Composable
-fun SplashScreen(navHostController: NavHostController) {
+fun SplashScreen(
+    navHostController: NavHostController,
+    splashViewModel: SplashViewModel = hiltViewModel()
+) {
     val degrees = remember { Animatable(initialValue = 0f) }
 
     LaunchedEffect(key1 = true) {
@@ -36,6 +41,12 @@ fun SplashScreen(navHostController: NavHostController) {
                 delayMillis = 200
             )
         )
+        navHostController.popBackStack()
+        if (splashViewModel.onBoardingCompleted.value) {
+            navHostController.navigate(Screen.Home.route)
+        } else {
+            navHostController.navigate(Screen.Welcome.route)
+        }
     }
 
     Splash(degrees.value)
