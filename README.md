@@ -1,0 +1,24 @@
+# MyBorutoApp
+- Jetpack Compose
+- Clean Architecture + Use Cases
+- Server Requests and Responses
+- Paging 3 Library with Jetpack Compose
+- Offline Caching with Remote Mediator
+- ROOM as a Local Database
+- Dependency Injection with Dagger-Hilt
+- Implement On Boarding Screens
+- Implement Compose Navigation
+- Implement Swipe to Refresh
+- Custom UI Component with Jetpack Compose
+  - Search Widget
+  - Rating Widget
+  - Ordered List
+  - Info Box
+- Testing Custom UI Components
+- Testing Android Application (Partially)
+- Beautiful App Design
+- Animated Splash Screen
+- Dynamic Layout Colors
+- Extract Colors from an Image and Apply them into the Layout
+- MVVM
+- Both Light and Dark Theme Design
