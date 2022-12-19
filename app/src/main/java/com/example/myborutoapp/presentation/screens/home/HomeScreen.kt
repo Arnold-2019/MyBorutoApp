@@ -9,9 +9,16 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.paging.compose.collectAsLazyPagingItems
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(
+    homeViewModel: HomeViewModel = hiltViewModel()
+) {
+
+    val allHeroes = homeViewModel.getAllHeroes().collectAsLazyPagingItems()
+
     Scaffold(
         topBar = {
             HomeTopBar(onSearchClicked = {})

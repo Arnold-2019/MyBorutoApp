@@ -1,5 +1,7 @@
 package com.example.myborutoapp.data.repository
 
+import androidx.paging.PagingData
+import com.example.myborutoapp.domain.model.Hero
 import com.example.myborutoapp.domain.repository.DataStoreOperations
 import com.example.myborutoapp.domain.repository.RemoteDataSource
 import kotlinx.coroutines.flow.Flow
@@ -15,5 +17,9 @@ class Repository @Inject constructor(
 
     fun readOnBoardingState(): Flow<Boolean> {
         return dataStore.readOnBoardingState()
+    }
+
+    fun getAllHeroes(): Flow<PagingData<Hero>> {
+        return remoteDataSource.getAllHeroes()
     }
 }

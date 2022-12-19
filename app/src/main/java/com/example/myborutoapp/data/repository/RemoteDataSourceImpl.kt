@@ -9,6 +9,7 @@ import com.example.myborutoapp.data.paging_source.HeroRemoteMediator
 import com.example.myborutoapp.data.remote.BorutoApi
 import com.example.myborutoapp.domain.model.Hero
 import com.example.myborutoapp.domain.repository.RemoteDataSource
+import com.example.myborutoapp.util.Constants.ITEMS_PER_PAGE
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
@@ -19,12 +20,10 @@ class RemoteDataSourceImpl @Inject constructor(
     private val remoteMediator: HeroRemoteMediator
 ) : RemoteDataSource {
 
-    private val heroDao = borutoDatabase.heroDao()
-
     override fun getAllHeroes(): Flow<PagingData<Hero>> {
-        val pagingSourceFactory = { heroDao.getAllHeroes() }
+        val pagingSourceFactory = { borutoDatabase.heroDao().getAllHeroes() }
         return Pager(
-            config = PagingConfig(pageSize = 3),
+            config = PagingConfig(pageSize = ITEMS_PER_PAGE),
             remoteMediator = remoteMediator,
             pagingSourceFactory = pagingSourceFactory
         ).flow

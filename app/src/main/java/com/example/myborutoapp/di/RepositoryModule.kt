@@ -8,6 +8,7 @@ import com.example.myborutoapp.data.repository.Repository
 import com.example.myborutoapp.domain.repository.DataStoreOperations
 import com.example.myborutoapp.domain.repository.RemoteDataSource
 import com.example.myborutoapp.domain.usecases.UseCases
+import com.example.myborutoapp.domain.usecases.getallheroes.GetAllHeroes
 import com.example.myborutoapp.domain.usecases.readonboarding.ReadOnBoardingUseCase
 import com.example.myborutoapp.domain.usecases.saveonboarding.SaveOnBoardingUseCase
 import dagger.Binds
@@ -44,5 +45,6 @@ object RepositoryModule {
     ): UseCases = UseCases(
         saveOnBoardingUseCase = SaveOnBoardingUseCase(repository),
         readOnBoardingUseCase = ReadOnBoardingUseCase(repository),
+        getAllHeroesUseCase = GetAllHeroes(repository)
     )
 }
