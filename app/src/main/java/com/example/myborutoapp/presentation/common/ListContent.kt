@@ -1,15 +1,17 @@
 package com.example.myborutoapp.presentation.common
 
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ContentAlpha
 import androidx.compose.material.MaterialTheme
@@ -26,6 +28,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.items
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import com.example.myborutoapp.R
@@ -36,19 +40,26 @@ import com.example.myborutoapp.ui.theme.HERO_ITEM_HEIGHT
 import com.example.myborutoapp.ui.theme.LARGE_PADDING
 import com.example.myborutoapp.ui.theme.MEDIUM_PADDING
 import com.example.myborutoapp.ui.theme.SMALL_PADDING
-import com.example.myborutoapp.ui.theme.Shapes
 import com.example.myborutoapp.ui.theme.topAppBarContentColor
 import com.example.myborutoapp.util.Constants.BASE_URL
 
 @ExperimentalCoilApi
 @Composable
 fun ListContent(
-    heroes: List<Hero>,
+    heroes: LazyPagingItems<Hero>,
     navController: NavHostController
 ) {
-    LazyColumn {
-        items(heroes) { hero ->
-            HeroItem(hero, navController)
+    LazyColumn(
+        contentPadding = PaddingValues(all = SMALL_PADDING),
+        verticalArrangement = Arrangement.spacedBy(SMALL_PADDING)
+    ) {
+        items(
+            items = heroes,
+            key = { hero -> hero.id }
+        ) { hero ->
+            hero?.let {
+                HeroItem(hero = hero, navController = navController)
+            }
         }
     }
 }
@@ -72,7 +83,7 @@ fun HeroItem(
             },
         contentAlignment = Alignment.BottomStart
     ) {
-        Surface(shape = Shapes.large) {
+        Surface(shape = RoundedCornerShape(size = LARGE_PADDING)) {
             Image(
                 modifier = Modifier.fillMaxWidth(),
                 painter = painter,
@@ -111,11 +122,15 @@ fun HeroItem(
                     modifier = Modifier.padding(top = SMALL_PADDING),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    RatingWidget(modifier = Modifier, rating = hero.rating)
+                    RatingWidget(
+                        modifier = Modifier.padding(end = SMALL_PADDING),
+                        rating = hero.rating
+                    )
                     Text(
                         text = "(${hero.rating})",
                         textAlign = TextAlign.Center,
-                        color = Color.White.copy(alpha = ContentAlpha.medium)
+                        color = Color.White.copy(alpha = ContentAlpha.medium),
+                        fontSize = MaterialTheme.typography.subtitle1.fontSize
                     )
                 }
             }
@@ -132,7 +147,29 @@ fun HeroItemPreview() {
             id = 1,
             name = "Sasuke",
             image = "",
-            about = "Some random text ...",
+            about = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley",
+            rating = 4.5,
+            power = 98,
+            month = "",
+            day = "",
+            family = listOf(),
+            abilities = listOf(),
+            natureTypes = listOf()
+        ),
+        navController = rememberNavController()
+    )
+}
+
+@ExperimentalCoilApi
+@Preview(uiMode = UI_MODE_NIGHT_YES)
+@Composable
+fun HeroItemDarkPreview() {
+    HeroItem(
+        hero = Hero(
+            id = 1,
+            name = "Sasuke",
+            image = "",
+            about = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley.",
             rating = 4.5,
             power = 98,
             month = "",

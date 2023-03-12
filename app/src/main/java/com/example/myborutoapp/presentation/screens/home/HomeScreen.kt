@@ -5,16 +5,20 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
 import androidx.paging.compose.collectAsLazyPagingItems
+import coil.annotation.ExperimentalCoilApi
+import com.example.myborutoapp.presentation.common.ListContent
 
+@ExperimentalCoilApi
 @Composable
 fun HomeScreen(
-    homeViewModel: HomeViewModel = hiltViewModel()
+    homeViewModel: HomeViewModel = hiltViewModel(),
+    navHostController: NavHostController
 ) {
 
     val allHeroes = homeViewModel.getAllHeroes().collectAsLazyPagingItems()
@@ -30,7 +34,7 @@ fun HomeScreen(
                 .background(MaterialTheme.colors.background),
             contentAlignment = Alignment.Center
         ) {
-            Text(text = "Home Screen")
+            ListContent(heroes = allHeroes, navController = navHostController)
         }
     }
 }
