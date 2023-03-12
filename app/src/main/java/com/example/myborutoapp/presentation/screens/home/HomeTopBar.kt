@@ -8,6 +8,7 @@ import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.tooling.preview.Preview
 import com.example.myborutoapp.ui.theme.topAppBarBackgroundColor
 import com.example.myborutoapp.ui.theme.topAppBarContentColor
 
@@ -27,4 +28,10 @@ fun HomeTopBar(onSearchClicked: () -> Unit) {
             }
         }
     )
+}
+
+@Preview
+@Composable
+fun HomeTopBarPreview() {
+    HomeTopBar {}
 }
